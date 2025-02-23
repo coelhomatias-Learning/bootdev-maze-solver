@@ -8,7 +8,9 @@ class Window:
         self.__root = Tk()
         self.__root.title("Maze Solver")
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
-        self.__canvas = Canvas(self.__root, width=width, height=height)
+        self.__canvas = Canvas(
+            self.__root, width=width, height=height, background="white"
+        )
         self.__canvas.pack(fill=BOTH, expand=1)
         self.is_running = False
 

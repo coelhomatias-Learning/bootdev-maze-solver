@@ -153,6 +153,57 @@ class Maze:
                 self._win.draw_cell(cell)
                 self._animate()
 
+    def solve(self) -> bool:
+        return self._solve_r(0, 0)
+
+    def _solve_r(self, i: int, j: int) -> bool:
+        if not self._cells or not self._win:
+            return False
+
+        self._animate()
+
+        current_cell = self._cells[i][j]
+        current_cell.visited = True
+
+        if i == len(self._cells) - 1 and j == len(self._cells[0]) - 1:
+            return True
+
+        to_visit: list[tuple[int, int]] = []
+
+        if (
+            i > 0
+            and not self._cells[i - 1][j].visited
+            and not current_cell.has_left_wall
+        ):
+            to_visit.append((i - 1, j))
+        if (
+            i < self.num_cols - 1
+            and not self._cells[i + 1][j].visited
+            and not current_cell.has_right_wall
+        ):
+            to_visit.append((i + 1, j))
+        if (
+            j > 0
+            and not self._cells[i][j - 1].visited
+            and not current_cell.has_top_wall
+        ):
+            to_visit.append((i, j - 1))
+        if (
+            j < self.num_rows - 1
+            and not self._cells[i][j + 1].visited
+            and not current_cell.has_bottom_wall
+        ):
+            to_visit.append((i, j + 1))
+
+        for to_idx in to_visit:
+            to_cell = self._cells[to_idx[0]][to_idx[1]]
+            self._win.draw_cell_move(current_cell, to_cell)
+            if self._solve_r(*to_idx):
+                return True
+            self._win.draw_cell_move(current_cell, to_cell, True)
+
+        return False
+
     def _animate(self) -> None:
         if self._win is None:
             return

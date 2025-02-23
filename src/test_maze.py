@@ -72,8 +72,6 @@ class TestMaze(unittest.TestCase):
         self.assertTrue(m1._cells[1][1].has_right_wall)
         self.assertTrue(m1._cells[1][1].has_bottom_wall)
 
-    # TODO: Write tests for maze._adjacent_cells
-
 
 if __name__ == "__main__":
     unittest.main()
