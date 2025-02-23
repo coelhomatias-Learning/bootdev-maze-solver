@@ -18,6 +18,36 @@ class Line:
         )
 
 
+class Cell:
+    def __init__(self, window: "Window", top_left: Point, bottom_right: Point) -> None:
+        self.has_left_wall = True
+        self.has_right_wall = True
+        self.has_top_wall = True
+        self.has_bottom_wall = True
+        self._top_left = top_left
+        self._top_right = Point(bottom_right.x, top_left.y)
+        self._bottom_left = Point(top_left.x, bottom_right.y)
+        self._bottom_right = bottom_right
+        self._win = window
+        self._fill_color = "black"
+
+    def draw(self) -> None:
+        if self.has_left_wall:
+            self._win.draw_line(
+                Line(self._bottom_left, self._top_left), self._fill_color
+            )
+        if self.has_top_wall:
+            self._win.draw_line(Line(self._top_left, self._top_right), self._fill_color)
+        if self.has_right_wall:
+            self._win.draw_line(
+                Line(self._top_right, self._bottom_right), self._fill_color
+            )
+        if self.has_bottom_wall:
+            self._win.draw_line(
+                Line(self._bottom_right, self._bottom_left), self._fill_color
+            )
+
+
 class Window:
     def __init__(self, width: int, height: int) -> None:
         self.__root = Tk()
@@ -41,3 +71,6 @@ class Window:
 
     def draw_line(self, line: Line, fill_color: str) -> None:
         line.draw(self.__canvas, fill_color)
+
+    def draw_cell(self, cell: Cell) -> None:
+        cell.draw()

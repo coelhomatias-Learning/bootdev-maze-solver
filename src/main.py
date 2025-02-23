@@ -1,4 +1,4 @@
-from window import Line, Point, Window
+from window import Cell, Line, Point, Window
 
 
 def main() -> None:
@@ -11,10 +11,19 @@ def main() -> None:
     line3 = Line(p3, p4)
     line4 = Line(p4, p1)
 
+    cp1, cp2 = Point(250, 250), Point(300, 300)
+    cp3, cp4 = Point(300, 300), Point(350, 350)
+    cell1 = Cell(win, cp1, cp2)
+    cell2 = Cell(win, cp3, cp4)
+    cell2.has_right_wall = False
+    cell2.has_left_wall = False
+
     win.draw_line(line1, "red")
     win.draw_line(line2, "red")
     win.draw_line(line3, "red")
     win.draw_line(line4, "red")
+    win.draw_cell(cell1)
+    win.draw_cell(cell2)
 
     win.wait_for_close()
 
