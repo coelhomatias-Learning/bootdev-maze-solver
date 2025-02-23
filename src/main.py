@@ -27,7 +27,7 @@ def main() -> None:
     # win.draw_cell(cell2)
     # win.draw_cell_move(cell1, cell2)
 
-    maze = Maze(0, 0, 30, 40, 20, 20, win)
+    maze = Maze(100, 100, 8, 12, 50, 50, win)
 
     win.wait_for_close()
 

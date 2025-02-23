@@ -26,6 +26,14 @@ class Maze:
         self._cells: list[list[Cell]] = []
         self._create_and_draw_cells()
 
+    def _break_entrance_and_exit(self) -> None:
+        if not self._cells:
+            return
+        first, last = self._cells[0][0], self._cells[-1][-1]
+        first.has_top_wall = False
+        last.has_bottom_wall = False
+        self._animate()
+
     def _create_cells(self) -> None:
         for i in range(self.num_cols):
             col = []
