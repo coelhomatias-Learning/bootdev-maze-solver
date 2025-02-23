@@ -1,4 +1,5 @@
-from window import Cell, Line, Point, Window
+from graphics import Cell, Line, Point
+from window import Window
 
 
 def main() -> None:
@@ -13,8 +14,8 @@ def main() -> None:
 
     cp1, cp2 = Point(250, 250), Point(300, 300)
     cp3, cp4 = Point(300, 250), Point(350, 300)
-    cell1 = Cell(win, cp1, cp2)
-    cell2 = Cell(win, cp3, cp4)
+    cell1 = Cell(cp1, cp2)
+    cell2 = Cell(cp3, cp4)
     cell1.has_right_wall = False
     cell2.has_left_wall = False
 
