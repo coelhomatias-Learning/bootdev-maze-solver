@@ -31,6 +31,8 @@ class Maze:
         self._cells: list[list[Cell]] = []
         self._create_and_draw_cells()
         self._break_entrance_and_exit()
+        self._break_walls_r(0, 0)
+        self._reset_cells_visited()
 
     def _break_entrance_and_exit(self) -> None:
         if not self._cells:
@@ -53,17 +55,17 @@ class Maze:
         if i1 == i2 and j1 == j2:
             return
         elif j1 == j2:
-            if i1 < i2:
+            if i1 == (i2 - 1):
                 c1.has_right_wall = False
                 c2.has_left_wall = False
-            else:
+            elif i1 == (i2 + 1):
                 c1.has_left_wall = False
                 c2.has_right_wall = False
         elif i1 == i2:
-            if j1 < j2:
+            if j1 == (j2 - 1):
                 c1.has_bottom_wall = False
                 c2.has_top_wall = False
-            else:
+            elif j1 == (j2 + 1):
                 c1.has_top_wall = False
                 c2.has_bottom_wall = False
         else:
@@ -71,35 +73,33 @@ class Maze:
 
         self._animate()
 
-    def _adjacent_cells(self, i: int, j: int) -> None | list[tuple[int, int]]:
-        if not self._cells:
-            return
-        if i < 0 or i > len(self._cells) - 1 or j < 0 or j > len(self._cells[0]) - 1:
-            return
-        return [
-            (min(i + 1, len(self._cells) - 1), j),
-            (max(i - 1, 0), j),
-            (i, min(j + 1, len(self._cells[0]) - 1)),
-            (i, max(j - 1, 0)),
-        ]
-
     def _break_walls_r(self, i: int, j: int) -> None:
         if not self._cells:
             return
         self._cells[i][j].visited = True
 
         while True:
-            adjacent = self._adjacent_cells(i, j)
-            if not adjacent:
-                return
-            to_visit = [
-                indx for indx in adjacent if not self._cells[indx[0]][indx[1]].visited
-            ]
+            to_visit: list[tuple[int, int]] = []
+
+            if i > 0 and not self._cells[i - 1][j].visited:
+                to_visit.append((i - 1, j))
+            if i < self.num_cols - 1 and not self._cells[i + 1][j].visited:
+                to_visit.append((i + 1, j))
+            if j > 0 and not self._cells[i][j - 1].visited:
+                to_visit.append((i, j - 1))
+            if j < self.num_rows - 1 and not self._cells[i][j + 1].visited:
+                to_visit.append((i, j + 1))
+
             if not to_visit:
                 return
             choice = random.choice(to_visit)
             self._break_wall_between_cells((i, j), choice)
             self._break_walls_r(*choice)
+
+    def _reset_cells_visited(self) -> None:
+        for col in self._cells:
+            for cell in col:
+                cell.visited = False
 
     def _create_cells(self) -> None:
         for i in range(self.num_cols):
