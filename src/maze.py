@@ -25,6 +25,7 @@ class Maze:
 
         self._cells: list[list[Cell]] = []
         self._create_and_draw_cells()
+        self._break_entrance_and_exit()
 
     def _break_entrance_and_exit(self) -> None:
         if not self._cells:
