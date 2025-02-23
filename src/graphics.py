@@ -40,11 +40,12 @@ class Cell:
             Line(self._top_right, self._bottom_right),
             Line(self._bottom_right, self._bottom_left),
         ]
-        self.center_point = Point(
+        self._center_point = Point(
             (self._top_left.x + self._bottom_right.x) // 2,
             (self._top_left.y + self._bottom_right.y) // 2,
         )
         self._fill_color = "black"
+        self.visited = False
 
     @property
     def has_left_wall(self):

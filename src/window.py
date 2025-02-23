@@ -42,4 +42,4 @@ class Window:
         self, cell_from: Cell, cell_to: Cell, undo: bool = False
     ) -> None:
         color = "gray" if undo else "red"
-        self.draw_line(Line(cell_from.center_point, cell_to.center_point), color)
+        self.draw_line(Line(cell_from._center_point, cell_to._center_point), color)
