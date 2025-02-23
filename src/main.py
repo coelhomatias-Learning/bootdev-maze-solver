@@ -12,10 +12,10 @@ def main() -> None:
     line4 = Line(p4, p1)
 
     cp1, cp2 = Point(250, 250), Point(300, 300)
-    cp3, cp4 = Point(300, 300), Point(350, 350)
+    cp3, cp4 = Point(300, 250), Point(350, 300)
     cell1 = Cell(win, cp1, cp2)
     cell2 = Cell(win, cp3, cp4)
-    cell2.has_right_wall = False
+    cell1.has_right_wall = False
     cell2.has_left_wall = False
 
     win.draw_line(line1, "red")
@@ -24,6 +24,7 @@ def main() -> None:
     win.draw_line(line4, "red")
     win.draw_cell(cell1)
     win.draw_cell(cell2)
+    win.draw_cell_move(cell1, cell2)
 
     win.wait_for_close()
 

@@ -47,6 +47,18 @@ class Cell:
                 Line(self._bottom_right, self._bottom_left), self._fill_color
             )
 
+    def draw_move(self, to_cell: "Cell", undo: bool = False) -> None:
+        center_self = Point(
+            (self._top_left.x + self._bottom_right.x) // 2,
+            (self._top_left.y + self._bottom_right.y) // 2,
+        )
+        center_to = Point(
+            (to_cell._top_left.x + to_cell._bottom_right.x) // 2,
+            (to_cell._top_left.y + to_cell._bottom_right.y) // 2,
+        )
+        color = "gray" if undo else "red"
+        self._win.draw_line(Line(center_self, center_to), color)
+
 
 class Window:
     def __init__(self, width: int, height: int) -> None:
@@ -74,3 +86,8 @@ class Window:
 
     def draw_cell(self, cell: Cell) -> None:
         cell.draw()
+
+    def draw_cell_move(
+        self, cell_from: Cell, cell_to: Cell, undo: bool = False
+    ) -> None:
+        cell_from.draw_move(cell_to, undo)
